@@ -22,8 +22,10 @@ submitButton.on("click", function(fiveDayForecast) {
             fetch(fiveDayURL).then(response => {
                 response.json().then(function(forecast) {
                     console.log(forecast.daily)
+                    console.log(forecast.current)
 
                     displayDays(forecast.daily);
+                    displayCurrent(forecast.current)
                 })
 
             })
@@ -38,13 +40,30 @@ var displayDays = function(daily) {
         // console.log("butts")
         console.log(daily[i].temp.day, daily[i].humidity, daily[i].wind_speed)
 
-        // unable to display info to page 
-        var dailyText = document.createElement("p")
-        dailyText.textContent = daily[i].temp.day
-        console.log(typeof dailyText)
-        console.log(typeof daysEl)
-        daysEl.appendChild(dailyText)
-
+        var dailyTemp = document.createElement("p")
+        var dailyWind = document.createElement("p")
+        var dailyHu = document.createElement("p")
+        dailyTemp.textContent = daily[i].temp.day
+        dailyWind.textContent = daily[i].wind_speed
+        dailyHu.textContent = daily[i].humidity
+        console.log(daysEl)
+        daysEl[i].appendChild(dailyTemp)
+        daysEl[i].appendChild(dailyWind)
+        daysEl[i].appendChild(dailyHu)
 
     }
+}
+
+var displayCurrent = function(current) {
+    console.log(current)
+
+    var currentTemp = document.getElementById("temp")
+    var currentUV = document.getElementById("UV")
+    var currentWind = document.getElementById("wind")
+    var currentHumid = document.getElementById("humid")
+
+    currentTemp.textContent = current.temp
+    currentHumid.textContent = current.humidity
+    currentUV.textContent = current.uvi
+    currentWind.textContent = current.wind_speed
 }
