@@ -38,6 +38,7 @@ var displayDays = function(daily) {
         // console.log("butts")
         console.log(daily[i].temp.day, daily[i].humidity, daily[i].wind_speed)
 
+        // unable to display info to page 
         var dailyText = document.createElement("p")
         dailyText.textContent = daily[i].temp.day
         console.log(typeof dailyText)
