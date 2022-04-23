@@ -3,6 +3,13 @@ var today = moment().unix()
 var submitButton = $(".btn")
 var inputEl = $("textarea.form-control")
 var daysEl = $(".days")
+var historyEl = $(".history")
+
+var dayOneEl = $("#day1")
+var dayTwoEl = $("#day2")
+var dayThreeEl = $("#day3")
+var dayFourEl = $("#day4")
+var dayFiveEl = $("#day5")
 
 
 submitButton.on("click", function(fiveDayForecast) {
@@ -26,6 +33,7 @@ submitButton.on("click", function(fiveDayForecast) {
 
                     displayDays(forecast.daily);
                     displayCurrent(forecast.current)
+                    saveCity(inputEl[0].value)
                 })
 
             })
@@ -51,7 +59,17 @@ var displayDays = function(daily) {
         daysEl[i].appendChild(dailyWind)
         daysEl[i].appendChild(dailyHu)
 
+        if (daysEl[i].hasChildNodes()) {
+            console.log("butts")
+
+            var butts = document.createElement("p")
+            butts.textContent = "she got the yams"
+            daysEl[i].replaceChild(butts, daysEl[i].children[i])
+
+        }
+
     }
+
 }
 
 var displayCurrent = function(current) {
@@ -66,4 +84,15 @@ var displayCurrent = function(current) {
     currentHumid.textContent = current.humidity
     currentUV.textContent = current.uvi
     currentWind.textContent = current.wind_speed
+}
+
+var saveCity = function(history) {
+    console.log(history)
+    console.log(historyEl)
+
+    for (var i = 0; i < historyEl.length; i++) {
+        var leCity = document.createElement("li")
+        leCity.textContent = history
+        historyEl[i].appendChild(leCity)
+    }
 }
