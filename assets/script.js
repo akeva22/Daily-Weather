@@ -11,8 +11,13 @@ var dayThreeEl = $("#day3")
 var dayFourEl = $("#day4")
 var dayFiveEl = $("#day5")
 
+console.log(dayOneEl);
+
 
 submitButton.on("click", function(fiveDayForecast) {
+
+
+
 
     var city = inputEl[0].value
     var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=2dbb03e35a692bed136d85c3f3ee91b2"
@@ -42,11 +47,17 @@ submitButton.on("click", function(fiveDayForecast) {
     })
 })
 
+
+
 var displayDays = function(daily) {
     console.log(daily)
+    deleteChild();
     for (var i = 0; i < 5; i++) {
         // console.log("butts")
         console.log(daily[i].temp.day, daily[i].humidity, daily[i].wind_speed)
+
+        var firstDay = document.createElement("p")
+        firstDay.textContent = "Day" + (i + 1).toString()
 
         var dailyTemp = document.createElement("p")
         var dailyWind = document.createElement("p")
@@ -55,21 +66,21 @@ var displayDays = function(daily) {
         dailyWind.textContent = daily[i].wind_speed
         dailyHu.textContent = daily[i].humidity
         console.log(daysEl)
+        daysEl[i].appendChild(firstDay)
         daysEl[i].appendChild(dailyTemp)
         daysEl[i].appendChild(dailyWind)
         daysEl[i].appendChild(dailyHu)
 
-        if (daysEl[i].hasChildNodes()) {
-            console.log("butts")
-
-            var butts = document.createElement("p")
-            butts.textContent = "she got the yams"
-            daysEl[i].replaceChild(butts, daysEl[i].children[i])
-
-        }
-
     }
 
+
+
+    //     if (daysEl[0].hasChildNodes()) {
+    //         console.log("butts")
+    //         dayOneEl.removeChild(dailyTemp)
+    //         console.log(dayOneEl)
+
+    //     }
 }
 
 var displayCurrent = function(current) {
@@ -95,4 +106,18 @@ var saveCity = function(history) {
         leCity.textContent = history
         historyEl[i].appendChild(leCity)
     }
+}
+
+function deleteChild() {
+    var e = document.getElementById("day1");
+    var f = document.getElementById("day2");
+    var g = document.getElementById("day3");
+    var h = document.getElementById("day4");
+    var i = document.getElementById("day5");
+
+    e.innerHTML = "";
+    f.innerHTML = "";
+    g.innerHTML = "";
+    h.innerHTML = "";
+    i.innerHTML = "";
 }
