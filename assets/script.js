@@ -5,19 +5,7 @@ var inputEl = $("textarea.form-control")
 var daysEl = $(".days")
 var historyEl = $(".history")
 
-var dayOneEl = $("#day1")
-var dayTwoEl = $("#day2")
-var dayThreeEl = $("#day3")
-var dayFourEl = $("#day4")
-var dayFiveEl = $("#day5")
-
-console.log(dayOneEl);
-
-
 submitButton.on("click", function(fiveDayForecast) {
-
-
-
 
     var city = inputEl[0].value
     var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=2dbb03e35a692bed136d85c3f3ee91b2"
@@ -28,17 +16,18 @@ submitButton.on("click", function(fiveDayForecast) {
             var lon = data.coord.lon
             console.log(lat, lon)
 
-            fiveDayURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,minutely&appid=2dbb03e35a692bed136d85c3f3ee91b2"
+            fiveDayURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&exclude=hourly,minutely&appid=2dbb03e35a692bed136d85c3f3ee91b2"
 
 
             fetch(fiveDayURL).then(response => {
+                console.log(response.url)
                 response.json().then(function(forecast) {
-                    console.log(forecast.daily)
+                    console.log(forecast)
                     console.log(forecast.current)
 
                     displayDays(forecast.daily);
                     displayCurrent(forecast.current)
-                    saveCity(inputEl[0].value)
+                    saveCity([inputEl[0].value, response.url])
                 })
 
             })
@@ -46,8 +35,6 @@ submitButton.on("click", function(fiveDayForecast) {
         })
     })
 })
-
-
 
 var displayDays = function(daily) {
     console.log(daily)
@@ -57,14 +44,14 @@ var displayDays = function(daily) {
         console.log(daily[i].temp.day, daily[i].humidity, daily[i].wind_speed)
 
         var firstDay = document.createElement("p")
-        firstDay.textContent = "Day" + (i + 1).toString()
+        firstDay.textContent = "Day " + (i + 1).toString()
 
         var dailyTemp = document.createElement("p")
         var dailyWind = document.createElement("p")
         var dailyHu = document.createElement("p")
-        dailyTemp.textContent = daily[i].temp.day
-        dailyWind.textContent = daily[i].wind_speed
-        dailyHu.textContent = daily[i].humidity
+        dailyTemp.textContent = "Temp: " + daily[i].temp.day + " °F"
+        dailyWind.textContent = "Wind: " + daily[i].wind_speed + " MPH"
+        dailyHu.textContent = "Humidity: " + daily[i].humidity + "%"
         console.log(daysEl)
         daysEl[i].appendChild(firstDay)
         daysEl[i].appendChild(dailyTemp)
@@ -73,14 +60,6 @@ var displayDays = function(daily) {
 
     }
 
-
-
-    //     if (daysEl[0].hasChildNodes()) {
-    //         console.log("butts")
-    //         dayOneEl.removeChild(dailyTemp)
-    //         console.log(dayOneEl)
-
-    //     }
 }
 
 var displayCurrent = function(current) {
@@ -91,22 +70,32 @@ var displayCurrent = function(current) {
     var currentWind = document.getElementById("wind")
     var currentHumid = document.getElementById("humid")
 
-    currentTemp.textContent = current.temp
-    currentHumid.textContent = current.humidity
-    currentUV.textContent = current.uvi
-    currentWind.textContent = current.wind_speed
+    currentTemp.textContent = "Temp: " + current.temp + " °F"
+    currentHumid.textContent = "Humidity: " + current.humidity + "%"
+    currentUV.textContent = "UVI Index: " + current.uvi
+    currentWind.textContent = "Wind: " + current.wind_speed + " MPH"
 }
 
 var saveCity = function(history) {
+
     console.log(history)
     console.log(historyEl)
 
+
     for (var i = 0; i < historyEl.length; i++) {
         var leCity = document.createElement("li")
-        leCity.textContent = history
+        var leCityLink = document.createElement("a")
+        leCity.textContent = leCityLink
+        leCityLink.textContent = history[0]
+        leCity.appendChild(leCityLink)
+        leCityLink.setAttribute("href", history[1])
         historyEl[i].appendChild(leCity)
+        localStorage.setItem(history[0], history[1])
+
+
     }
 }
+
 
 function deleteChild() {
     var e = document.getElementById("day1");
