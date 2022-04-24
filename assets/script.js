@@ -8,7 +8,7 @@ var historyEl = $(".history")
 submitButton.on("click", function(fiveDayForecast) {
 
     var city = inputEl[0].value
-    var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=2dbb03e35a692bed136d85c3f3ee91b2"
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=2dbb03e35a692bed136d85c3f3ee91b2"
 
     fetch(apiUrl).then(response => {
         response.json().then(function(data) {
