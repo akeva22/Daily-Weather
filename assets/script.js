@@ -56,9 +56,6 @@ var displayDays = function(daily) {
         daysEl[i].appendChild(firstDay)
 
 
-        // var sunny = document.createElement("i")
-        // sunny.setAttribute("class", "wi wi-day-sunny")
-        // daysEl[i].appendChild(sunny)
 
         if (daily[i].temp.day > 75 || daily[i].wind_speed > 9) {
             var windy = document.createElement("i")
