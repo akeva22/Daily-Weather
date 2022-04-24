@@ -41,7 +41,7 @@ var displayDays = function(daily) {
     deleteChild();
     for (var i = 0; i < 5; i++) {
         // console.log("butts")
-        console.log(daily[i].temp.day, daily[i].humidity, daily[i].wind_speed)
+        console.log(typeof daily[i].temp.day, daily[i].humidity, daily[i].wind_speed)
 
         var firstDay = document.createElement("p")
         firstDay.textContent = "Day " + (i + 1).toString()
@@ -54,9 +54,29 @@ var displayDays = function(daily) {
         dailyHu.textContent = "Humidity: " + daily[i].humidity + "%"
         console.log(daysEl)
         daysEl[i].appendChild(firstDay)
+
+
+        // var sunny = document.createElement("i")
+        // sunny.setAttribute("class", "wi wi-day-sunny")
+        // daysEl[i].appendChild(sunny)
+
+        if (daily[i].temp.day > 75 || daily[i].wind_speed > 9) {
+            var windy = document.createElement("i")
+            windy.setAttribute("class", "wi wi-day-windy")
+            daysEl[i].appendChild(windy)
+        } else if (daily[i].wind_speed < 9) {
+            var sunny = document.createElement("i")
+            sunny.setAttribute("class", "wi wi-day-sunny")
+            daysEl[i].appendChild(sunny)
+        }
+
+
         daysEl[i].appendChild(dailyTemp)
         daysEl[i].appendChild(dailyWind)
         daysEl[i].appendChild(dailyHu)
+
+
+
 
     }
 
